@@ -13,14 +13,16 @@ def scrape_all():
 
     news_title, news_paragraph = mars_news(browser)
 
+    hemisphere_image_urls = mars_hemisphere(browser)
+
     # Run all scraping functions and store results in dictionary
     data = {
         "news_title": news_title,
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
+        "hemispheres": hemisphere_image_urls,
         "last_modified": dt.datetime.now()
-        "mars hemisphere url": hemisphere_image_urls
     }
 
     # Stop webdriver and return data
@@ -100,7 +102,7 @@ def mars_facts():
     return df.to_html()
 
 # ##Scraping of mars hemispheres
-def mars_hemisphere():
+def mars_hemisphere(browser):
 
     # 1. Use browser to visit the URL 
     url = 'https://marshemispheres.com/'
@@ -117,6 +119,7 @@ def mars_hemisphere():
     #Create a list to hold the images and titles.
     hemisphere_image_urls = []
 
+    #Write code to retrive the image urls and titles for each hemisphere.
     for i in range(4):
         #create empty dictionary
         hemispheres = {}
