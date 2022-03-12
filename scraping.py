@@ -119,17 +119,38 @@ def mars_hemisphere(browser):
     #Create a list to hold the images and titles.
     hemisphere_image_urls = []
 
-    #Write code to retrive the image urls and titles for each hemisphere.
-    for i in range(4):
-        #create empty dictionary
+    # #Retrieve each item that contains a img
+    results = img_soup.find("div", class_ = 'collapsible results')
+    mars_img = results.find_all('div', class_='item')
+
+    #Get the image link
+    links = browser.find_by_css('a.product-item img')
+
+    for i in range(len(links)):
+        #Create empty dictionary
         hemispheres = {}
+        
+        #Get the image link
         browser.find_by_css('a.product-item img')[i].click()
-        element = browser.find_link_by_text('Sample').first
-        img_url = element['href']
-        title = browser.find_by_css("h2.title").text
-        hemispheres["img_url"] = img_url
-        hemispheres["title"] = title
+
+        #Scrape the title
+        mars_title = browser.find_by_css("h2.title").text
+
+        # find the relative image url
+        sample = browser.links.find_by_text('Sample').first
+        img_url_rel = sample['href']
+
+        # # Use the base url to create an absolute url
+        # image_urls = f'https://marshemispheres.com/{img_url_rel}'
+        
+        #Add to dictionary
+        hemispheres["img_url"] = img_url_rel
+        hemispheres["title"] = mars_title
+        
+        #Add to list
         hemisphere_image_urls.append(hemispheres)
+
+        #Go back a page to start scrape again
         browser.back()
 
     return hemisphere_image_urls

@@ -158,66 +158,60 @@ hemisphere_image_urls = []
 # 3. Write code to retrieve the image urls and titles for each hemisphere.
 
 # #Retrieve each item that contains a img
-# results = img_soup.find("div", class_ = 'collapsible results')
-# mars_img = results.find_all('div', class_='item')
+results = img_soup.find("div", class_ = 'collapsible results')
+mars_img = results.find_all('div', class_='item')
 
-# for i in mars_img:
-#     #Create empty dictionary
-#     hemispheres = {}
-    
-#     #Scrape the title
-#     mars_title = i.find("h3").get_text()
-    
-#     #Get the image link
-#     links = browser.find_by_css('a.product-item img')[i]
-#     links.click()
+#Get the image link
+links = browser.find_by_css('a.product-item img')
 
-#     # find the relative image url
-#     sample = browser.find_link_by_text('Sample').first
-#     img_url_rel = sample['href']
-
-#     # Use the base url to create an absolute url
-#     image_urls = f'https://marshemispheres.com/{img_url_rel}'
-    
-#     #Add to dictionary
-#     hemispheres["img_url"] = image_urls
-#     hemispheres["title"] = mars_title
-    
-#     #Add to list
-#     hemisphere_image_urls.append(hemispheres)
-
-#     #Go back a page to start scrape again
-#     browser.back()
-
-# 3. Write code to retrieve the image urls and titles for each hemisphere.
-for i in range(4):
-    #create empty dictionary
+for i in range(len(links)):
+    #Create empty dictionary
     hemispheres = {}
+    
+    #Get the image link
     browser.find_by_css('a.product-item img')[i].click()
-    element = browser.find_link_by_text('Sample').first
-    img_url = element['href']
-    title = browser.find_by_css("h2.title").text
-    hemispheres["img_url"] = img_url
-    hemispheres["title"] = title
+
+    #Scrape the title
+    mars_title = browser.find_by_css("h2.title").text
+
+    # find the relative image url
+    sample = browser.links.find_by_text('Sample').first
+    img_url_rel = sample['href']
+
+    # # Use the base url to create an absolute url
+    # image_urls = f'https://marshemispheres.com/{img_url_rel}'
+    
+    #Add to dictionary
+    hemispheres["img_url"] = img_url_rel
+    hemispheres["title"] = mars_title
+    
+    #Add to list
     hemisphere_image_urls.append(hemispheres)
+
+    #Go back a page to start scrape again
     browser.back()
 
+# print(hemisphere_image_urls)
 
-# In[26]:
+# OPTIONAL CODE
+# # 3. Write code to retrieve the image urls and titles for each hemisphere.
+# for i in range(4):
+#     #create empty dictionary
+#     hemispheres = {}
+#     browser.find_by_css('a.product-item img')[i].click()
+#     element = browser.find_link_by_text('Sample').first
+#     img_url = element['href']
+#     title = browser.find_by_css("h2.title").text
+#     hemispheres["img_url"] = img_url
+#     hemispheres["title"] = title
+#     hemisphere_image_urls.append(hemispheres)
+#     browser.back()
 
-
-# 4. Print the list that holds the dictionary of each image url and title.
-hemisphere_image_urls
-
-
-# In[27]:
 
 
 # 5. Quit the browser
 browser.quit()
 
-
-# In[ ]:
 
 
 
