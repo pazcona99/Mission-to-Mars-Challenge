@@ -10,13 +10,13 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
   </head>
-  <body>
+  <body >
     <div class="container">
       <!-- Add Jumbotron to Header -->
       <div class="jumbotron text-center" style = "background-color: orangered;">
         <h1>Mission to Mars</h1>
         <!-- Add a button to activate scraping script -->
-        <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
+        <p><a class="btn btn-danger btn-lg" href="/scrape" role="button"><strong>Scrape New Data</strong></a></p>
       </div>
 
       <!-- Add section for Mars News -->
@@ -40,7 +40,7 @@
           <!-- if images is False/None/non-existent, then default to error message -->
           <img
             src="{{mars.featured_image | default('static/images/error.png', true) }}"
-            class="img-responsive"
+            class="img-thumbnail"
             alt="Responsive image"
           />
         </div>
@@ -48,10 +48,8 @@
         <div class="col-md-4">
           <!-- Mars Facts -->
           <div class="row" id="mars-facts">
-            <h4>Mars Facts</h4> 
-            <div class = "table-responsive"> 
+            <h2>Mars Facts</h2>
               {{ mars.facts | safe }}
-            </div>
           </div>
         </div>
       </div>
@@ -63,7 +61,7 @@
         </div>
 
         {% for hemisphere in mars.hemispheres %}
-        <div class="col-md-6">
+        <div class="col-md-3">
           <div class="thumbnail">
             <img src="{{hemisphere.img_url | default('static/images/error.png', true)}}" alt="Responsive image" class="img-responsive">
             <div class="caption">
